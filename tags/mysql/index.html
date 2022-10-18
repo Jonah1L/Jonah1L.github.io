@@ -7,20 +7,20 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   
-  <meta name="theme-color" content="#2f4154">
+  <meta name="theme-color" content="#a9a9a9">
   <meta name="author" content="Jonah">
   <meta name="keywords" content="java,学习记录,程序员">
   
     <meta name="description" content="Jonah的学习记录">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Tags - mysql">
+<meta property="og:title" content="标签 - mysql">
 <meta property="og:url" content="https://jonah1l.github.io/tags/mysql/index.html">
 <meta property="og:site_name" content="Jonah">
 <meta property="og:description" content="Jonah的学习记录">
@@ -33,7 +33,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Tags - mysql - Jonah</title>
+  <title>标签 - mysql - Jonah</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -59,6 +59,11 @@
     <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
+
+
+  
+<link rel="stylesheet" href="/css/scroll.css">
+<link rel="stylesheet" href="/css/mycss.css">
 
 
 
@@ -207,7 +212,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">Tags - mysql</span>
+            <span id="subtitle">标签 - mysql</span>
           
         </div>
 
@@ -235,7 +240,7 @@
                 
 
 <div class="list-group">
-  <p class="h4">1 posts in total</p>
+  <p class="h4">共计 1 篇文章</p>
   <hr>
   
   
@@ -273,7 +278,7 @@
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -281,7 +286,7 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
@@ -295,40 +300,58 @@
   </main>
 
   <footer>
-    <div class="footer-inner">
-  
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+    <div>
+      <span id="timeDate">载入天数...</span>
+      <span id="times">载入时分秒...</span>
+      <script>
+        var now = new Date();
+        function createtime() {
+          var grt = new Date("2022/10/18 00:00:00"); //此处修改你的建站时间或者网站上线时间
+          now.setTime(now.getTime() + 250);
+          days = (now - grt) / 1000 / 60 / 60 / 24;
+          dnum = Math.floor(days);
+          hours = (now - grt) / 1000 / 60 / 60 - 24 * dnum;
+          hnum = Math.floor(hours);
+          if (String(hnum).length == 1) {
+            hnum = "0" + hnum;
+          }
+          minutes = (now - grt) / 1000 / 60 - 24 * 60 * dnum - 60 * hnum;
+          mnum = Math.floor(minutes);
+          if (String(mnum).length == 1) {
+            mnum = "0" + mnum;
+          }
+          seconds =
+            (now - grt) / 1000 -
+            24 * 60 * 60 * dnum -
+            60 * 60 * hnum -
+            60 * mnum;
+          snum = Math.round(seconds);
+          if (String(snum).length == 1) {
+            snum = "0" + snum;
+          }
+          document.getElementById("timeDate").innerHTML =
+            "🚀 已运行 " + dnum + "&nbsp天"; //此次自定义显示内容
+          document.getElementById("times").innerHTML =
+            hnum + "&nbsp小时&nbsp" + mnum + "&nbsp分&nbsp" + snum + "&nbsp秒";
+        }
+        setInterval("createtime()", 250);
+      </script>
     </div>
-  
-  
-    <div class="statistics">
-  
-  
 
-  
-    
-      <span id="busuanzi_container_site_pv" style="display: none">
-        总访问量 
-        <span id="busuanzi_value_site_pv"></span>
-         次
-      </span>
-    
-    
-      <span id="busuanzi_container_site_uv" style="display: none">
-        总访客数 
-        <span id="busuanzi_value_site_uv"></span>
-         人
-      </span>
-    
-    
-  
-</div>
-
-  
-  
-  
-</div>
+    <!-- 不蒜子统计 -->
+    <script
+      async
+      src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"
+    ></script>
+    <span>
+      总访问量
+      <span id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  </div>
+</footer>
 
   </footer>
 
@@ -364,8 +387,6 @@
 
   <script  src="/js/local-search.js" ></script>
 
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
 
 
 
@@ -378,7 +399,7 @@
   
 
   <noscript>
-    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
   </noscript>
 </body>
 </html>
