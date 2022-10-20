@@ -1,0 +1,15 @@
+- class_name: 友情链接
+  class_desc: 常用网站
+  link_list:
+    - name: BiliBili
+      link: https://www.bilibili.com/
+      avatar: /img/link/bilibili.jpg
+      descr: 视频网站
+    - name: Weibo
+      link: https://www.weibo.com/
+      avatar: /img/link/web.jpg
+      descr: 中国最大社交分享平台
+    - name: CSDN
+      link: https://www.csdn.net/
+      avatar: /img/link/csdn.jpg
+      descr: 技术分享平台
