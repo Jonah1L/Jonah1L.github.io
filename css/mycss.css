@@ -156,4 +156,12 @@
   height: 10px;
 }
 
-
+body {
+  cursor: url(https://cdn.jsdelivr.net/npm/kang-static/Hexo/img/default.cur),
+    default;
+}
+a,
+img {
+  cursor: url(https://cdn.jsdelivr.net/npm/kang-static/Hexo/img/pointer.cur),
+    default;
+}
