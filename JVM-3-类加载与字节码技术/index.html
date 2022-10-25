@@ -1,0 +1,488 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>JVM-3-类加载与字节码技术 | Jonah</title><meta name="keywords" content="java,jvm"><meta name="author" content="Jonah"><meta name="copyright" content="Jonah"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="类加载与字节码技术1.类文件结构一个简单的 HelloWorld.java package cn.itcast.jvm.t5; &#x2F;&#x2F; HelloWorld 示例 public class HelloWorld &amp;#123; 	public static void main(String[] args) &amp;#123; 		System.out.println(&quot;hello world&quot;); 	&amp;#1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JVM-3-类加载与字节码技术">
+<meta property="og:url" content="https://jonah1l.github.io/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/index.html">
+<meta property="og:site_name" content="Jonah">
+<meta property="og:description" content="类加载与字节码技术1.类文件结构一个简单的 HelloWorld.java package cn.itcast.jvm.t5; &#x2F;&#x2F; HelloWorld 示例 public class HelloWorld &amp;#123; 	public static void main(String[] args) &amp;#123; 		System.out.println(&quot;hello world&quot;); 	&amp;#1">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://jonah1l.github.io/img/post/jvm.jpg">
+<meta property="article:published_time" content="2022-10-25T07:01:09.000Z">
+<meta property="article:modified_time" content="2022-10-25T10:09:36.000Z">
+<meta property="article:author" content="Jonah">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="jvm">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jonah1l.github.io/img/post/jvm.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://jonah1l.github.io/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/Jonah" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'JVM-3-类加载与字节码技术',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-10-25 18:09:36'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/mycss.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/myimages/122c3d66b23e45407297fbadacf3b3ef%20(3).jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/post/jvm.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Jonah</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">JVM-3-类加载与字节码技术</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-10-25T07:01:09.000Z" title="发表于 2022-10-25 15:01:09">2022-10-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-10-25T10:09:36.000Z" title="更新于 2022-10-25 18:09:36">2022-10-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/java%E6%8A%80%E6%9C%AF%E6%A0%88/">java技术栈</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>12分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="JVM-3-类加载与字节码技术"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="类加载与字节码技术"><a href="#类加载与字节码技术" class="headerlink" title="类加载与字节码技术"></a>类加载与字节码技术</h1><h2 id="1-类文件结构"><a href="#1-类文件结构" class="headerlink" title="1.类文件结构"></a>1.类文件结构</h2><p>一个简单的 HelloWorld.java</p>
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">cn<span class="token punctuation">.</span>itcast<span class="token punctuation">.</span>jvm<span class="token punctuation">.</span>t5</span><span class="token punctuation">;</span>
+<span class="token comment">// HelloWorld 示例</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HelloWorld</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"hello world"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+<p>执行 javac -parameters -d . HellowWorld.java</p>
+<p>编译为 HelloWorld.class 后是这个样子的：</p>
+<pre class="language-none"><code class="language-none">[root@localhost ~]# od -t xC HelloWorld.class
+0000000 ca fe ba be 00 00 00 34 00 23 0a 00 06 00 15 09
+0000020 00 16 00 17 08 00 18 0a 00 19 00 1a 07 00 1b 07
+0000040 00 1c 01 00 06 3c 69 6e 69 74 3e 01 00 03 28 29
+0000060 56 01 00 04 43 6f 64 65 01 00 0f 4c 69 6e 65 4e
+0000100 75 6d 62 65 72 54 61 62 6c 65 01 00 12 4c 6f 63
+0000120 61 6c 56 61 72 69 61 62 6c 65 54 61 62 6c 65 01
+0000140 00 04 74 68 69 73 01 00 1d 4c 63 6e 2f 69 74 63
+0000160 61 73 74 2f 6a 76 6d 2f 74 35 2f 48 65 6c 6c 6f
+0000200 57 6f 72 6c 64 3b 01 00 04 6d 61 69 6e 01 00 16
+0000220 28 5b 4c 6a 61 76 61 2f 6c 61 6e 67 2f 53 74 72
+0000240 69 6e 67 3b 29 56 01 00 04 61 72 67 73 01 00 13
+0000260 5b 4c 6a 61 76 61 2f 6c 61 6e 67 2f 53 74 72 69
+0000300 6e 67 3b 01 00 10 4d 65 74 68 6f 64 50 61 72 61
+0000320 6d 65 74 65 72 73 01 00 0a 53 6f 75 72 63 65 46
+0000340 69 6c 65 01 00 0f 48 65 6c 6c 6f 57 6f 72 6c 64
+0000360 2e 6a 61 76 61 0c 00 07 00 08 07 00 1d 0c 00 1e
+0000400 00 1f 01 00 0b 68 65 6c 6c 6f 20 77 6f 72 6c 64
+0000420 07 00 20 0c 00 21 00 22 01 00 1b 63 6e 2f 69 74
+0000440 63 61 73 74 2f 6a 76 6d 2f 74 35 2f 48 65 6c 6c
+0000460 6f 57 6f 72 6c 64 01 00 10 6a 61 76 61 2f 6c 61
+0000500 6e 67 2f 4f 62 6a 65 63 74 01 00 10 6a 61 76 61
+0000520 2f 6c 61 6e 67 2f 53 79 73 74 65 6d 01 00 03 6f
+0000540 75 74 01 00 15 4c 6a 61 76 61 2f 69 6f 2f 50 72
+0000560 69 6e 74 53 74 72 65 61 6d 3b 01 00 13 6a 61 76
+0000600 61 2f 69 6f 2f 50 72 69 6e 74 53 74 72 65 61 6d
+0000620 01 00 07 70 72 69 6e 74 6c 6e 01 00 15 28 4c 6a
+0000640 61 76 61 2f 6c 61 6e 67 2f 53 74 72 69 6e 67 3b
+0000660 29 56 00 21 00 05 00 06 00 00 00 00 00 02 00 01
+0000700 00 07 00 08 00 01 00 09 00 00 00 2f 00 01 00 01
+0000720 00 00 00 05 2a b7 00 01 b1 00 00 00 02 00 0a 00
+0000740 00 00 06 00 01 00 00 00 04 00 0b 00 00 00 0c 00
+0000760 01 00 00 00 05 00 0c 00 0d 00 00 00 09 00 0e 00
+0001000 0f 00 02 00 09 00 00 00 37 00 02 00 01 00 00 00
+0001020 09 b2 00 02 12 03 b6 00 04 b1 00 00 00 02 00 0a
+0001040 00 00 00 0a 00 02 00 00 00 06 00 08 00 07 00 0b
+0001060 00 00 00 0c 00 01 00 00 00 09 00 10 00 11 00 00
+0001100 00 12 00 00 00 05 01 00 10 00 00 00 01 00 13 00
+0001120 00 00 02 00 14</code></pre>
+
+<p>根据 JVM 规范，类文件结构如下</p>
+<pre class="language-none"><code class="language-none">ClassFile &#123;
+    u4 magic;
+    u2 minor_version;
+    u2 major_version;
+    u2 constant_pool_count;
+    cp_info constant_pool[constant_pool_count-1];
+    u2 access_flags;
+    u2 this_class;
+    u2 super_class;
+    u2 interfaces_count;
+    u2 interfaces[interfaces_count];
+    u2 fields_count;
+    field_info fields[fields_count];
+    u2 methods_count;
+    method_info methods[methods_count];
+    u2 attributes_count;
+    attribute_info attributes[attributes_count];
+&#125;</code></pre>
+
+
+
+<h3 id="1-1-魔数"><a href="#1-1-魔数" class="headerlink" title="1.1 魔数"></a>1.1 魔数</h3><p>0~3 字节，表示它是否是【class】类型的文件</p>
+<p>0000000 <strong>ca fe ba be</strong> 00 00 00 34 00 23 0a 00 06 00 15 09</p>
+<h3 id="1-2-版本"><a href="#1-2-版本" class="headerlink" title="1.2 版本"></a>1.2 版本</h3><p>4~7 字节，表示类的版本 00 34（52） 表示是 Java 8</p>
+<p>0000000 ca fe ba be <strong>00 00 00 34</strong> 00 23 0a 00 06 00 15 09</p>
+<h3 id="1-3-常量池"><a href="#1-3-常量池" class="headerlink" title="1.3 常量池"></a>1.3 常量池</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025152639239.png"></p>
+<p>8<del>9 字节，表示常量池长度，00 23 （35） 表示常量池有 #1</del>#34项，注意 #0 项不计入，也没有值</p>
+<p>0000000 ca fe ba be 00 00 00 34 <strong>00 23</strong> 0a 00 06 00 15 09</p>
+<p>第#1项 0a 表示一个 Method 信息，00 06 和 00 15（21） 表示它引用了常量池中 #6 和 #21 项来获得这个方法的【所属类】和【方法名】</p>
+<p>0000000 ca fe ba be 00 00 00 34 00 23 <strong>0a 00 06 00 15</strong> 09</p>
+<p>第#2项 09 表示一个 Field 信息，00 16（22）和 00 17（23） 表示它引用了常量池中 #22 和 # 23 项来获得这个成员变量的【所属类】和【成员变量名】</p>
+<p>0000000 ca fe ba be 00 00 00 34 00 23 0a 00 06 00 15 <strong>09</strong></p>
+<p>0000020 <strong>00 16 00 17</strong> 08 00 18 0a 00 19 00 1a 07 00 1b 07</p>
+<p>第#3项 08 表示一个字符串常量名称，00 18（24）表示它引用了常量池中 #24 项</p>
+<p>0000020 00 16 00 17 08 00 18 0a 00 19 00 1a 07 00 1b 07</p>
+<p>第#4项 0a 表示一个 Method 信息，00 19（25） 和 00 1a（26） 表示它引用了常量池中 #25 和 #26项来获得这个方法的【所属类】和【方法名】</p>
+<p>0000020 00 16 00 17 <strong>08 00 18</strong> 0a 00 19 00 1a 07 00 1b 07</p>
+<p>第#5项 07 表示一个 Class 信息，00 1b（27） 表示它引用了常量池中 #27 项</p>
+<p>0000020 00 16 00 17 08 00 18 <strong>0a 00 19 00 1a</strong> 07 00 1b 07</p>
+<p>太多了略。。。</p>
+<p>参考文献</p>
+<p><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html">https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html</a></p>
+<h2 id="2-字节码指令"><a href="#2-字节码指令" class="headerlink" title="2.字节码指令"></a>2.字节码指令</h2><h3 id="2-1-入门"><a href="#2-1-入门" class="headerlink" title="2.1 入门"></a>2.1 入门</h3><p>接着上一节，研究一下两组字节码指令，一个是</p>
+<p>public cn.itcast.jvm.t5.HelloWorld();  构造方法的字节码指令</p>
+<pre class="language-none"><code class="language-none">2a b7 00 01 b1</code></pre>
+
+<ol>
+<li>2a &#x3D;&gt; <em>aload_0</em> 加载 slot 0 的局部变量，即 this，做为下面的 <em>invokespecial</em> 构造方法调用的参数</li>
+<li>b7 &#x3D;&gt; <em>invokespecial</em> 预备调用构造方法，哪个方法呢？</li>
+<li>00 01 引用常量池中 #1 项，即【 Method java&#x2F;lang&#x2F;Object.”<init>“:()V 】</init></li>
+<li>b1 表示返回</li>
+</ol>
+<p>另一个是 public static void main(java.lang.String[]);  主方法的字节码指令</p>
+<pre class="language-none"><code class="language-none">b2 00 02 12 03 b6 00 04 b1</code></pre>
+
+<ol>
+<li><p>b2 &#x3D;&gt; <em>getstatic</em> 用来加载静态变量，哪个静态变量呢？</p>
+</li>
+<li><p>00 02 引用常量池中 #2 项，即【Field java&#x2F;lang&#x2F;System.out:Ljava&#x2F;io&#x2F;PrintStream;】</p>
+</li>
+<li><p>12 &#x3D;&gt; <em>ldc</em> 加载参数，哪个参数呢？</p>
+</li>
+<li><p>03 引用常量池中 #3 项，即 【String hello world】</p>
+</li>
+<li><p>b6 &#x3D;&gt; <em>invokevirtual</em> 预备调用成员方法，哪个方法呢？</p>
+</li>
+<li><p>00 04 引用常量池中 #4 项，即【Method java&#x2F;io&#x2F;PrintStream.println:(Ljava&#x2F;lang&#x2F;String;)V】</p>
+</li>
+<li><p>b1 表示返回</p>
+</li>
+</ol>
+<h3 id="2-2javap工具"><a href="#2-2javap工具" class="headerlink" title="2.2javap工具"></a>2.2javap工具</h3><p>自己分析类文件结构太麻烦了，Oracle 提供了 javap 工具来反编译 class 文件</p>
+<pre class="language-none"><code class="language-none">[root@localhost ~]# javap -v HelloWorld.class
+Classfile &#x2F;root&#x2F;HelloWorld.class
+Last modified Jul 7, 2019; size 597 bytes
+  MD5 checksum df1dce65bf6fb0b4c1de318051f4a67e
+  Compiled from &quot;Demo1.java&quot;
+public class com.nyima.JVM.day5.Demo1
+  minor version: 0
+  major version: 52
+  flags: ACC_PUBLIC, ACC_SUPER
+Constant pool:
+   #1 &#x3D; Methodref          #6.#15         &#x2F;&#x2F; java&#x2F;lang&#x2F;Object.&quot;&lt;init&gt;&quot;:()V
+   #2 &#x3D; Fieldref           #16.#17        &#x2F;&#x2F; java&#x2F;lang&#x2F;System.out:Ljava&#x2F;io&#x2F;PrintStream;
+   #3 &#x3D; String             #18            &#x2F;&#x2F; hello world
+   #4 &#x3D; Methodref          #19.#20        &#x2F;&#x2F; java&#x2F;io&#x2F;PrintStream.println:(Ljava&#x2F;lang&#x2F;String;)V
+   #5 &#x3D; Class              #21            &#x2F;&#x2F; com&#x2F;nyima&#x2F;JVM&#x2F;day5&#x2F;Demo1
+   #6 &#x3D; Class              #22            &#x2F;&#x2F; java&#x2F;lang&#x2F;Object
+   #7 &#x3D; Utf8               &lt;init&gt;
+   #8 &#x3D; Utf8               ()V
+   #9 &#x3D; Utf8               Code
+  #10 &#x3D; Utf8               LineNumberTable
+  #11 &#x3D; Utf8               main
+  #12 &#x3D; Utf8               ([Ljava&#x2F;lang&#x2F;String;)V
+  #13 &#x3D; Utf8               SourceFile
+  #14 &#x3D; Utf8               Demo1.java
+  #15 &#x3D; NameAndType        #7:#8          &#x2F;&#x2F; &quot;&lt;init&gt;&quot;:()V
+  #16 &#x3D; Class              #23            &#x2F;&#x2F; java&#x2F;lang&#x2F;System
+  #17 &#x3D; NameAndType        #24:#25        &#x2F;&#x2F; out:Ljava&#x2F;io&#x2F;PrintStream;
+  #18 &#x3D; Utf8               hello world
+  #19 &#x3D; Class              #26            &#x2F;&#x2F; java&#x2F;io&#x2F;PrintStream
+  #20 &#x3D; NameAndType        #27:#28        &#x2F;&#x2F; println:(Ljava&#x2F;lang&#x2F;String;)V
+  #21 &#x3D; Utf8               com&#x2F;nyima&#x2F;JVM&#x2F;day5&#x2F;Demo1
+  #22 &#x3D; Utf8               java&#x2F;lang&#x2F;Object
+  #23 &#x3D; Utf8               java&#x2F;lang&#x2F;System
+  #24 &#x3D; Utf8               out
+  #25 &#x3D; Utf8               Ljava&#x2F;io&#x2F;PrintStream;
+  #26 &#x3D; Utf8               java&#x2F;io&#x2F;PrintStream
+  #27 &#x3D; Utf8               println
+  #28 &#x3D; Utf8               (Ljava&#x2F;lang&#x2F;String;)V
+&#123;
+  public com.nyima.JVM.day5.Demo1();
+    descriptor: ()V
+    flags: ACC_PUBLIC
+    Code:
+      stack&#x3D;1, locals&#x3D;1, args_size&#x3D;1
+         0: aload_0
+         1: invokespecial #1                  &#x2F;&#x2F; Method java&#x2F;lang&#x2F;Object.&quot;&lt;init&gt;&quot;:()V
+         4: return
+      LineNumberTable:
+        line 7: 0
+
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava&#x2F;lang&#x2F;String;)V
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack&#x3D;2, locals&#x3D;1, args_size&#x3D;1
+         0: getstatic     #2                  &#x2F;&#x2F; Field java&#x2F;lang&#x2F;System.out:Ljava&#x2F;io&#x2F;PrintStream;
+         3: ldc           #3                  &#x2F;&#x2F; String hello world
+         5: invokevirtual #4                  &#x2F;&#x2F; Method java&#x2F;io&#x2F;PrintStream.println:(Ljava&#x2F;lang&#x2F;String;)V
+
+         8: return
+      LineNumberTable:
+        line 9: 0
+        line 10: 8
+&#125;</code></pre>
+
+
+
+<h3 id="2-3-图解方法执行流程"><a href="#2-3-图解方法执行流程" class="headerlink" title="2.3 图解方法执行流程"></a>2.3 图解方法执行流程</h3><ol>
+<li>原始java代码</li>
+</ol>
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+* 演示 字节码指令 和 操作数栈、常量池的关系
+*/</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Demo3_1</span> <span class="token punctuation">&#123;</span>    
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>        
+		<span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>        
+		<span class="token keyword">int</span> b <span class="token operator">=</span> <span class="token class-name">Short</span><span class="token punctuation">.</span><span class="token constant">MAX_VALUE</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>        
+		<span class="token keyword">int</span> c <span class="token operator">=</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>        
+		<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>   
+    <span class="token punctuation">&#125;</span> 
+<span class="token punctuation">&#125;</span></code></pre>
+
+
+
+<ol start="2">
+<li>常量池载入运行时常量池</li>
+</ol>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025161855004.png"></p>
+<ol start="3">
+<li>方法字节码载入方法区</li>
+</ol>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025162134467.png"></p>
+<ol start="4">
+<li>main 线程开始运行，分配栈帧内存</li>
+</ol>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025162210264.png"></p>
+<ol start="5">
+<li>执行引擎开始执行字节码</li>
+</ol>
+<p><strong>bipush</strong>  </p>
+<p>   将一个 byte 压入操作数栈（其长度会补齐 4 个字节），类似的指令还有 : </p>
+<ul>
+<li>sipush 将一个 short 压入操作数栈（其长度会补齐 4 个字节）</li>
+<li>ldc 将一个 int 压入操作数栈</li>
+<li>ldc2_w 将一个 long 压入操作数栈（分两次压入，因为 long 是 8 个字节）</li>
+<li>这里小的数字都是和字节码指令存在一起，超过 short 范围的数字存入了常量池</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025162824796.png"></p>
+<p><strong>istore_1</strong></p>
+<ul>
+<li>将操作数栈顶数据弹出，存入局部变量表的 slot 1</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025163138479.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025163155249.png"></p>
+<p><strong>ldc #3</strong></p>
+<ul>
+<li>从常量池加载 #3 数据到操作数栈</li>
+<li><strong>注意</strong> Short.MAX_VALUE 是 32767，所以 32768 &#x3D; Short.MAX_VALUE + 1 实际是在编译期间计算好的</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025173922741.png"></p>
+<p><strong>istore_2</strong></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025174017099.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025174042066.png"></p>
+<p><strong>iload_1</strong></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025174148715.png"></p>
+<p><strong>iload_2</strong></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025174211829.png"></p>
+<p><strong>iadd</strong></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025174237587.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025174257411.png"></p>
+<p><strong>istore_3</strong></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025174339424.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025174350816.png"></p>
+<p><strong>getstatic #4</strong></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025174512072.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025174531571.png"></p>
+<p><strong>iload_3</strong></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025174606461.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025174621873.png"></p>
+<p><strong>invokevirtual #5</strong></p>
+<ul>
+<li>找到常量池 #5 项</li>
+<li>定位到方法区 java&#x2F;io&#x2F;PrintStream.println:(I)V 方法</li>
+<li>生成新的栈帧（分配 locals、stack等）</li>
+<li>传递参数，执行新栈帧中的字节码</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025174847625.png"></p>
+<ul>
+<li>执行完毕，弹出栈帧</li>
+<li>清除main操作数栈内容</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025174942538.png"></p>
+<p><strong>return</strong></p>
+<ul>
+<li>完成main方法调用，弹出main栈帧</li>
+<li>程序结束</li>
+</ul>
+<h3 id="2-4-练习-分析-i"><a href="#2-4-练习-分析-i" class="headerlink" title="2.4 练习 - 分析 i++"></a>2.4 练习 - 分析 i++</h3><p>目的：从字节码角度分析 a++ 相关题目</p>
+<p>源码：</p>
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token keyword">package</span> <span class="token namespace">cn<span class="token punctuation">.</span>itcast<span class="token punctuation">.</span>jvm<span class="token punctuation">.</span>t3<span class="token punctuation">.</span>bytecode</span><span class="token punctuation">;</span>
+
+<span class="token comment">/**
+ * 从字节码角度分析　a++  相关题目
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Demo3_2</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> b <span class="token operator">=</span> a<span class="token operator">++</span> <span class="token operator">+</span> <span class="token operator">++</span>a <span class="token operator">+</span> a<span class="token operator">--</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+
+
+<p>分析：</p>
+<ul>
+<li>注意 iinc 指令是直接在局部变量 slot 上进行运算</li>
+<li>a++ 和 ++a 的区别是先执行 iload 还是 先执行 iinc</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025180035920.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025180102096.png"></p>
+<p><strong>a++：</strong></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025180136908.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025180231381.png"></p>
+<p><strong>++a：</strong></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025180308744.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025180529909.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025180609036.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025180657843.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025180712792.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025180749932.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/image-20221025180808714.png"></p>
+<h2 id="4-类加载阶段"><a href="#4-类加载阶段" class="headerlink" title="4.类加载阶段"></a>4.类加载阶段</h2><h2 id="5-类加载器"><a href="#5-类加载器" class="headerlink" title="5.类加载器"></a>5.类加载器</h2><h2 id="6-运行期优化"><a href="#6-运行期优化" class="headerlink" title="6.运行期优化"></a>6.运行期优化</h2></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://jonah1l.github.io">Jonah</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://jonah1l.github.io/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/">https://jonah1l.github.io/JVM-3-类加载与字节码技术/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">转载请注明来自 <a href="https://jonah1l.github.io/" target="_blank">Jonah</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/java/">java</a><a class="post-meta__tags" href="/tags/jvm/">jvm</a></div><div class="post_share"><div class="social-share" data-image="/img/post/jvm.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/post/jvm.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">JVM-2.垃圾回收</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/JVM-1-%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" title="JVM-1.内存结构"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/post/jvm.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-20</div><div class="title">JVM-1.内存结构</div></div></a></div><div><a href="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" title="JVM-2.垃圾回收"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/post/jvm.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-21</div><div class="title">JVM-2.垃圾回收</div></div></a></div><div><a href="/%E9%9D%A2%E8%AF%95%E9%A2%98-3-%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%AF%87/" title="面试题-3.虚拟机篇"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/post/jvm.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-20</div><div class="title">面试题-3.虚拟机篇</div></div></a></div><div><a href="/%E9%9D%A2%E8%AF%95%E9%A2%98-2-%E5%B9%B6%E5%8F%91%E7%AF%87/" title="面试题-2.并发篇"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/post/juc.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-20</div><div class="title">面试题-2.并发篇</div></div></a></div><div><a href="/%E9%9D%A2%E8%AF%95%E9%A2%98-1-%E5%9F%BA%E7%A1%80%E7%AF%87/" title="面试题-1.基础篇"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/post/java.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-20</div><div class="title">面试题-1.基础篇</div></div></a></div><div><a href="/%E9%9D%A2%E8%AF%95%E9%A2%98-4-%E6%A1%86%E6%9E%B6%E7%AF%87/" title="面试题-4.框架篇"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/post/spring.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-20</div><div class="title">面试题-4.框架篇</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/myimages/122c3d66b23e45407297fbadacf3b3ef%20(3).jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Jonah</div><div class="author-info__description">QQ: 2534333278</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Jonah1L"><i class="fab fa-github"></i><span>Git Hub</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://jonah-1314485145.cos.ap-nanjing.myqcloud.com/temp_qrcode_share_2534333278.png.png" target="_blank" title="点击加我好友"><i class="fa-brands fa-qq"></i></a><a class="social-icon" href="https://jonah-1314485145.cos.ap-nanjing.myqcloud.com/CB20F9F13126DC3EF6C1D363032470CB.png" target="_blank" title="点击加我好友"><i class="fa-brands fa-weixin"></i></a><a class="social-icon" href="mailto:2534333278@qq.com" target="_blank" title="点击给我发邮件"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">工欲善其事，必先利其器</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF"><span class="toc-text">类加载与字节码技术</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%B1%BB%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="toc-text">1.类文件结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E9%AD%94%E6%95%B0"><span class="toc-text">1.1 魔数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E7%89%88%E6%9C%AC"><span class="toc-text">1.2 版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%B8%B8%E9%87%8F%E6%B1%A0"><span class="toc-text">1.3 常量池</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4"><span class="toc-text">2.字节码指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%85%A5%E9%97%A8"><span class="toc-text">2.1 入门</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2javap%E5%B7%A5%E5%85%B7"><span class="toc-text">2.2javap工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%9B%BE%E8%A7%A3%E6%96%B9%E6%B3%95%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-text">2.3 图解方法执行流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E7%BB%83%E4%B9%A0-%E5%88%86%E6%9E%90-i"><span class="toc-text">2.4 练习 - 分析 i++</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E9%98%B6%E6%AE%B5"><span class="toc-text">4.类加载阶段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="toc-text">5.类加载器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E8%BF%90%E8%A1%8C%E6%9C%9F%E4%BC%98%E5%8C%96"><span class="toc-text">6.运行期优化</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/" title="JVM-3-类加载与字节码技术"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/post/jvm.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JVM-3-类加载与字节码技术"/></a><div class="content"><a class="title" href="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/" title="JVM-3-类加载与字节码技术">JVM-3-类加载与字节码技术</a><time datetime="2022-10-25T07:01:09.000Z" title="发表于 2022-10-25 15:01:09">2022-10-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" title="JVM-2.垃圾回收"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/post/jvm.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JVM-2.垃圾回收"/></a><div class="content"><a class="title" href="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" title="JVM-2.垃圾回收">JVM-2.垃圾回收</a><time datetime="2022-10-21T08:48:29.000Z" title="发表于 2022-10-21 16:48:29">2022-10-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/JVM-1-%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" title="JVM-1.内存结构"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/post/jvm.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JVM-1.内存结构"/></a><div class="content"><a class="title" href="/JVM-1-%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" title="JVM-1.内存结构">JVM-1.内存结构</a><time datetime="2022-10-20T13:04:40.000Z" title="发表于 2022-10-20 21:04:40">2022-10-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/%E9%9D%A2%E8%AF%95%E9%A2%98-4-%E6%A1%86%E6%9E%B6%E7%AF%87/" title="面试题-4.框架篇"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/post/spring.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="面试题-4.框架篇"/></a><div class="content"><a class="title" href="/%E9%9D%A2%E8%AF%95%E9%A2%98-4-%E6%A1%86%E6%9E%B6%E7%AF%87/" title="面试题-4.框架篇">面试题-4.框架篇</a><time datetime="2022-10-20T12:45:36.000Z" title="发表于 2022-10-20 20:45:36">2022-10-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/%E9%9D%A2%E8%AF%95%E9%A2%98-3-%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%AF%87/" title="面试题-3.虚拟机篇"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/post/jvm.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="面试题-3.虚拟机篇"/></a><div class="content"><a class="title" href="/%E9%9D%A2%E8%AF%95%E9%A2%98-3-%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%AF%87/" title="面试题-3.虚拟机篇">面试题-3.虚拟机篇</a><time datetime="2022-10-20T12:35:22.000Z" title="发表于 2022-10-20 20:35:22">2022-10-20</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 By Jonah</div><div class="framework-info"><span></span></div><div class="footer_custom_text">向来痴，从此醉</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '0l7f9l5bjNITqdvAPW3gJLBN-gzGzoHsz',
+      appKey: 'n1NQPAKPAtTienBd2HwT5cXp',
+      avatar: 'robohash',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="/js/fairyDustCursor.js"></script><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
