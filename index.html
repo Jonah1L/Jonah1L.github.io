@@ -51,7 +51,7 @@
   isHome: true,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2022-10-26 15:40:36'
+  postUpdate: '2022-10-26 15:43:26'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -235,60 +235,32 @@ finishRefresh
 
 1 为准备环境
 
-2 3  ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/%E9%9D%A2%E8%AF%95%E9%A2%98-3-%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%AF%87/" title="面试题-3.虚拟机篇"><img class="post_bg" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/post/jvm.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="面试题-3.虚拟机篇"></a></div><div class="recent-post-info"><a class="article-title" href="/%E9%9D%A2%E8%AF%95%E9%A2%98-3-%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%AF%87/" title="面试题-3.虚拟机篇">面试题-3.虚拟机篇</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-10-20T12:35:22.000Z" title="发表于 2022-10-20 20:35:22">2022-10-20</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/">面试题</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/java/">java</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/jvm/">jvm</a></span></div><div class="content">4. 内存溢出要求
+2 3  ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/%E9%9D%A2%E8%AF%95%E9%A2%98-3-%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%AF%87/" title="面试题-3.虚拟机篇"><img class="post_bg" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/post/jvm.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="面试题-3.虚拟机篇"></a></div><div class="recent-post-info"><a class="article-title" href="/%E9%9D%A2%E8%AF%95%E9%A2%98-3-%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%AF%87/" title="面试题-3.虚拟机篇">面试题-3.虚拟机篇</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-10-20T12:35:22.000Z" title="发表于 2022-10-20 20:35:22">2022-10-20</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/">面试题</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/java/">java</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/jvm/">jvm</a></span></div><div class="content">虚拟机篇1. JVM 内存结构要求
 
-能够说出几种典型的导致内存溢出的情况
+掌握 JVM 内存结构划分
+尤其要知道方法区、永久代、元空间的关系
 
-典型情况
-
-误用线程池导致的内存溢出
-参考 day03.TestOomThreadPool
+结合一段 java 代码的执行理解内存划分
 
 
-查询数据量太大导致的内存溢出
-参考 day03.TestOomTooManyObject
-
-
-动态生成类导致的内存溢出
-参考 day03.TestOomTooManyClass
-
-
-
-5. 类加载要求
-
-掌握类加载阶段
-掌握类加载器
-理解双亲委派机制
-
-类加载过程的三个阶段
-
-加载
-
-将类的字节码载入方法区，并创建类.class 对象
-
-如果此类的父类没有加载，先加载父类
-
-加载是懒惰执行
+执行 javac 命令编译源代码为字节码
+执行 java 命令
+创建 JVM，调用类加载子系统加载 class，将类的信息存入方法区
+创建 main 线程，使用的内存区域是 JVM 虚拟机栈，开始执行 main 方法代码
+如果遇到了未见过的类，会继续触发类加载过程，同样会存入方法区
+需要创建对象，会使用堆内存来存储对象
+不再使用的对象，会由垃圾回收器在内存不足时回收其内存
+调用方法时，方法内的局部变量、方法参数所使用的是  JVM 虚拟机栈中的栈帧内存
+调用方法时，先要到方法区获得到该方法的字节码指令，由解释器将字节码指令解释为机器码执行
+调用方法时，会将要执行的指令行号读到程序计数器，这样当发生了线程切换，恢复时就可以从中断的位置继续
+对于非 java 实现的方法调用，使用内存称为本地方法栈（见说明）
+对于热点方法调用，或者频繁的循环代码，由 JIT 即时编译器将这些代码编译成机器码缓存，提高执行性能
 
 
 
-链接
+说明
 
-验证 – 验证类是否符合 Class 规范，合法性、安全性检查
-准备 – 为 static 变量分配空间，设置默认值
-解析 – 将常量池的符号引用解析为直接引用
-
-
-初始化
-
-静态代码块、static 修饰的变量赋值、static final 修饰的引用类型变量赋值，会被合并成一个 &lt;cinit&gt; 方法，在初始化时被调用
-static final 修饰的基本类型变量赋值，在链接阶段就已完成
-初始化是懒惰执行
-
-
-
-
-验 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/%E9%9D%A2%E8%AF%95%E9%A2%98-2-%E5%B9%B6%E5%8F%91%E7%AF%87/" title="面试题-2.并发篇"><img class="post_bg" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/post/juc.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="面试题-2.并发篇"></a></div><div class="recent-post-info"><a class="article-title" href="/%E9%9D%A2%E8%AF%95%E9%A2%98-2-%E5%B9%B6%E5%8F%91%E7%AF%87/" title="面试题-2.并发篇">面试题-2.并发篇</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-10-20T12:30:35.000Z" title="发表于 2022-10-20 20:30:35">2022-10-20</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/">面试题</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/java/">java</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/juc/">juc</a></span></div><div class="content">并发篇1. 线程状态要求
+加粗字体代表了 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/%E9%9D%A2%E8%AF%95%E9%A2%98-2-%E5%B9%B6%E5%8F%91%E7%AF%87/" title="面试题-2.并发篇"><img class="post_bg" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/post/juc.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="面试题-2.并发篇"></a></div><div class="recent-post-info"><a class="article-title" href="/%E9%9D%A2%E8%AF%95%E9%A2%98-2-%E5%B9%B6%E5%8F%91%E7%AF%87/" title="面试题-2.并发篇">面试题-2.并发篇</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-10-20T12:30:35.000Z" title="发表于 2022-10-20 20:30:35">2022-10-20</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/">面试题</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/java/">java</a><span class="article-meta-link">•</span><a class="article-meta__tags" href="/tags/juc/">juc</a></span></div><div class="content">并发篇1. 线程状态要求
 
 掌握 Java 线程六种状态
 掌握 Java 线程状态转换
@@ -423,7 +395,7 @@ More info: Deployment
             </div>
             <ul class="card-category-list" id="aside-cat-list">
             <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/java%E6%8A%80%E6%9C%AF%E6%A0%88/"><span class="card-category-list-name">java技术栈</span><span class="card-category-list-count">4</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/java%E6%8A%80%E6%9C%AF%E6%A0%88/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="card-category-list-name">数据库</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3/"><span class="card-category-list-name">帮助文档</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/"><span class="card-category-list-name">面试题</span><span class="card-category-list-count">5</span></a></li>
-            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/java/" style="font-size: 1.5em; color: #99a9bf">java</a> <a href="/tags/juc/" style="font-size: 1.1em; color: #999">juc</a> <a href="/tags/jvm/" style="font-size: 1.3em; color: #99a1ac">jvm</a> <a href="/tags/mysql/" style="font-size: 1.1em; color: #999">mysql</a> <a href="/tags/spring/" style="font-size: 1.1em; color: #999">spring</a></div></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">10</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2022-10-19T16:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">63.3k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2022-10-26T07:40:36.569Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 By Jonah</div><div class="framework-info"><span></span></div><div class="footer_custom_text">向来痴，从此醉</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function subtitleType () {
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/java/" style="font-size: 1.5em; color: #99a9bf">java</a> <a href="/tags/juc/" style="font-size: 1.1em; color: #999">juc</a> <a href="/tags/jvm/" style="font-size: 1.3em; color: #99a1ac">jvm</a> <a href="/tags/mysql/" style="font-size: 1.1em; color: #999">mysql</a> <a href="/tags/spring/" style="font-size: 1.1em; color: #999">spring</a></div></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">10</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2022-10-19T16:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">64.6k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2022-10-26T07:43:26.530Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 By Jonah</div><div class="framework-info"><span></span></div><div class="footer_custom_text">向来痴，从此醉</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function subtitleType () {
   getScript('https://sdk.jinrishici.com/v2/browser/jinrishici.js').then(() => {
     jinrishici.load(result =>{
       if (true) {
