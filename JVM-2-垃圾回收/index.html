@@ -7,7 +7,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/jvm.jpg">
 <meta property="article:published_time" content="2022-10-21T08:48:29.000Z">
-<meta property="article:modified_time" content="2022-11-04T08:10:16.975Z">
+<meta property="article:modified_time" content="2022-11-04T08:51:41.413Z">
 <meta property="article:author" content="Jonah">
 <meta property="article:tag" content="jvm">
 <meta name="twitter:card" content="summary">
@@ -53,7 +53,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2022-11-04 16:10:16'
+  postUpdate: '2022-11-04 16:51:41'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -142,9 +142,9 @@
       }
     }
     detectApple()
-    })(window)</script><link rel="stylesheet" href="/css/mycss.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/myimages/122c3d66b23e45407297fbadacf3b3ef%20(3).jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/jvm.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Jonah</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">JVM-2.垃圾回收</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-10-21T08:48:29.000Z" title="发表于 2022-10-21 16:48:29">2022-10-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-11-04T08:10:16.975Z" title="更新于 2022-11-04 16:10:16">2022-11-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/java%E6%8A%80%E6%9C%AF%E6%A0%88/">java技术栈</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/java%E6%8A%80%E6%9C%AF%E6%A0%88/JVM/">JVM</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">5.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>18分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="JVM-2.垃圾回收"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h1><h2 id="1-如何判断对象可以回收"><a href="#1-如何判断对象可以回收" class="headerlink" title="1. 如何判断对象可以回收"></a>1. 如何判断对象可以回收</h2><h3 id="1-1-引用计数法"><a href="#1-1-引用计数法" class="headerlink" title="1.1 引用计数法"></a>1.1 引用计数法</h3><p>只要一个对象被其他变量所引用，就让这个对象的计数加一，如果被引用了两次，就加二，如果一个变量不引用它的，就让计数减一。当一个对象的引用计数变为0了，就意味着可以作为垃圾回收。</p>
+    })(window)</script><link rel="stylesheet" href="/css/mycss.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/myimages/122c3d66b23e45407297fbadacf3b3ef%20(3).jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/jvm.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Jonah</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">JVM-2.垃圾回收</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-10-21T08:48:29.000Z" title="发表于 2022-10-21 16:48:29">2022-10-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-11-04T08:51:41.413Z" title="更新于 2022-11-04 16:51:41">2022-11-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/java%E6%8A%80%E6%9C%AF%E6%A0%88/">java技术栈</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/java%E6%8A%80%E6%9C%AF%E6%A0%88/JVM/">JVM</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">5.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>18分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="JVM-2.垃圾回收"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h1><h2 id="1-如何判断对象可以回收"><a href="#1-如何判断对象可以回收" class="headerlink" title="1. 如何判断对象可以回收"></a>1. 如何判断对象可以回收</h2><h3 id="1-1-引用计数法"><a href="#1-1-引用计数法" class="headerlink" title="1.1 引用计数法"></a>1.1 引用计数法</h3><p>只要一个对象被其他变量所引用，就让这个对象的计数加一，如果被引用了两次，就加二，如果一个变量不引用它的，就让计数减一。当一个对象的引用计数变为0了，就意味着可以作为垃圾回收。</p>
 <p>会有内存泄漏的问题：两个对象互相引用，但没有其他对象引用它们，由于引用计数都为1，所以不能被垃圾回收。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/image-20221021165934529.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211041650083.png"></p>
 <h3 id="1-2-可达性分析算法"><a href="#1-2-可达性分析算法" class="headerlink" title="1.2 可达性分析算法"></a>1.2 可达性分析算法</h3><ul>
 <li><p>Java 虚拟机中的垃圾回收器采用可达性分析来探索所有存活的对象</p>
 </li>
@@ -155,7 +155,7 @@
 <p>在当前活动线程中，局部变量所引用的对象、方法参数引用的对象都是GC Root对象。</p>
 </li>
 </ul>
-<h3 id="1-3-四种引用"><a href="#1-3-四种引用" class="headerlink" title="1.3 四种引用"></a>1.3 四种引用</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/image-20221021192724537.png"></p>
+<h3 id="1-3-四种引用"><a href="#1-3-四种引用" class="headerlink" title="1.3 四种引用"></a>1.3 四种引用</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211041650267.png"></p>
 <ol>
 <li>强引用</li>
 </ol>
@@ -263,7 +263,7 @@
 
 
 <h2 id="2-垃圾回收算法"><a href="#2-垃圾回收算法" class="headerlink" title="2. 垃圾回收算法"></a>2. 垃圾回收算法</h2><p><strong>三种垃圾回收算法</strong></p>
-<h3 id="2-1-标记清除法"><a href="#2-1-标记清除法" class="headerlink" title="2.1 标记清除法"></a>2.1 标记清除法</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/image-20210831211008162.png"></p>
+<h3 id="2-1-标记清除法"><a href="#2-1-标记清除法" class="headerlink" title="2.1 标记清除法"></a>2.1 标记清除法</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211041650916.png"></p>
 <p>解释：</p>
 <ol>
 <li>找到 GC Root 对象，即那些一定不会被回收的对象，如正执行方法内局部变量引用的对象、静态变量引用的对象</li>
@@ -276,7 +276,7 @@
 <li>清除速度与内存大小线性关系</li>
 <li>缺点是会产生内存碎片</li>
 </ul>
-<h3 id="2-2-标记整理法"><a href="#2-2-标记整理法" class="headerlink" title="2.2 标记整理法"></a>2.2 标记整理法</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/image-20210831211641241.png"></p>
+<h3 id="2-2-标记整理法"><a href="#2-2-标记整理法" class="headerlink" title="2.2 标记整理法"></a>2.2 标记整理法</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211041650579.png"></p>
 <p>解释：</p>
 <ol>
 <li>前面的标记阶段、清理阶段与标记清除法类似</li>
@@ -291,7 +291,7 @@
 <li><p>缺点是性能上较慢</p>
 </li>
 </ul>
-<h3 id="2-3-标记复制法"><a href="#2-3-标记复制法" class="headerlink" title="2.3 标记复制法"></a>2.3 标记复制法</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/image-20210831212125813.png"></p>
+<h3 id="2-3-标记复制法"><a href="#2-3-标记复制法" class="headerlink" title="2.3 标记复制法"></a>2.3 标记复制法</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211041650248.png"></p>
 <p>解释：</p>
 <ol>
 <li>将整个内存分成两个大小相等的区域，from 和 to，其中 to 总是处于空闲，from 存储新创建的对象</li>
@@ -304,7 +304,7 @@
 <li>标记与复制速度与存活对象成线性关系</li>
 <li>缺点是会占用成倍的空间</li>
 </ul>
-<h2 id="3-分代垃圾回收"><a href="#3-分代垃圾回收" class="headerlink" title="3. 分代垃圾回收"></a>3. 分代垃圾回收</h2><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/image-20221023160119931.png"></p>
+<h2 id="3-分代垃圾回收"><a href="#3-分代垃圾回收" class="headerlink" title="3. 分代垃圾回收"></a>3. 分代垃圾回收</h2><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211041650403.png"></p>
 <ul>
 <li><p>对象首先分配在伊甸园区域</p>
 </li>
@@ -383,7 +383,7 @@
 <pre class="language-none"><code class="language-none">&#x2F;&#x2F;Serial工作在新生代，采用复制算法。 SerialOld工作在老年代，采用标记整理法。
 -XX:+UseSerialGC &#x3D; Serial + SerialOld</code></pre>
 
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/image-20221024151436515.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211041650540.png"></p>
 <p><strong>安全点</strong>：让其他线程都在这个点停下来，以免垃圾回收时移动对象地址，使得其他线程找不到被移动的对象</p>
 <p>因为是串行的，所以只有一个垃圾回收线程。且在该线程执行回收工作时，其他线程进入<strong>阻塞</strong>状态</p>
 <h5 id="Serial-收集器"><a href="#Serial-收集器" class="headerlink" title="Serial 收集器"></a>Serial 收集器</h5><p>Serial收集器是最基本的、发展历史最悠久的收集器</p>
@@ -403,7 +403,7 @@
 - XX:MaxGCPauseMillis&#x3D;ms &#x2F;&#x2F;最大暂停毫秒数 默认值200 
 - XX:ParallelGCThreads&#x3D;n &#x2F;&#x2F;控制线程数</code></pre>
 
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/image-20221024152036217.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211041650320.png"></p>
 <h5 id="Parallel-Scavenge-收集器"><a href="#Parallel-Scavenge-收集器" class="headerlink" title="Parallel Scavenge 收集器"></a>Parallel Scavenge 收集器</h5><p>与吞吐量关系密切，故也称为吞吐量优先收集器</p>
 <p><strong>特点</strong>：属于新生代收集器也是采用<strong>复制算法</strong>的收集器（用到了新生代的幸存区），又是并行的多线程收集器（与ParNew收集器类似）</p>
 <p>该收集器的目标是达到一个可控制的吞吐量。还有一个值得关注的点是：<strong>GC自适应调节策略</strong>（与ParNew收集器最重要的一个区别）</p>
@@ -431,7 +431,7 @@
 - XX:CMSInitiatingOccupancyFraction&#x3D;percent &#x2F;&#x2F;占用内存达到多大比例才进行垃圾回收
 - XX:+CMSScavengeBeforeRemark &#x2F;&#x2F;重新标记之前，先做一次新生代的垃圾回收</code></pre>
 
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/image-20221024153044402.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211041650369.png"></p>
 <h5 id="CMS-收集器"><a href="#CMS-收集器" class="headerlink" title="CMS 收集器"></a>CMS 收集器</h5><p>Concurrent Mark Sweep，一种以获取<strong>最短回收停顿时间</strong>为目标的<strong>老年代</strong>收集器</p>
 <p><strong>特点</strong>：基于<strong>标记-清除算法</strong>实现。并发收集、低停顿，但是会产生内存碎片</p>
 <p><strong>应用场景</strong>：适用于注重服务的响应速度，希望系统停顿时间最短，给用户带来更好的体验等场景下。如web程序、b&#x2F;s服务</p>
@@ -462,42 +462,42 @@
 <li>XX:G1HeapRegionSize&#x3D;size  &#x2F;&#x2F;设置Region大小</li>
 <li>XX:MaxGCPauseMillis&#x3D;time  &#x2F;&#x2F;暂停时间</li>
 </ul>
-<h4 id="1-G1-垃圾回收阶段"><a href="#1-G1-垃圾回收阶段" class="headerlink" title="1) G1 垃圾回收阶段"></a>1) G1 垃圾回收阶段</h4><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/image-20221024163150652.png"></p>
+<h4 id="1-G1-垃圾回收阶段"><a href="#1-G1-垃圾回收阶段" class="headerlink" title="1) G1 垃圾回收阶段"></a>1) G1 垃圾回收阶段</h4><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211041650827.png"></p>
 <p>新生代伊甸园垃圾回收—–&gt;内存不足，新生代回收+并发标记—–&gt;回收新生代伊甸园、幸存区、老年代内存——&gt;新生代伊甸园垃圾回收(重新开始)</p>
 <h4 id="2-新生代回收"><a href="#2-新生代回收" class="headerlink" title="2)新生代回收"></a>2)新生代回收</h4><ol>
 <li>初始时，所有区域都处于空闲状态</li>
 </ol>
-<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/image-20210831222639754.png" alt="image-20210831222639754" style="zoom:50%;">
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211041651084.png" alt="image-20210831222639754" style="zoom:50%;">
 
 <ol start="2">
 <li>创建了一些对象，挑出一些空闲区域作为伊甸园区存储这些对象</li>
 </ol>
-<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/image-20210831222653802.png" alt="image-20210831222653802" style="zoom:50%;">
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211041651930.png" alt="image-20210831222653802" style="zoom:50%;">
 
 <ol start="3">
 <li>当伊甸园需要垃圾回收时，挑出一个空闲区域作为幸存区，用复制算法复制存活对象，需要暂停用户线程</li>
 </ol>
-<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/image-20210831222705814.png" alt="image-20210831222705814" style="zoom:50%;">
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211041651482.png" alt="image-20210831222705814" style="zoom:50%;">
 
 <ol start="4">
 <li>复制完成，将之前的伊甸园内存释放</li>
 </ol>
-<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/image-20210831222724999.png" alt="image-20210831222724999" style="zoom:50%;">
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211041651086.png" alt="image-20210831222724999" style="zoom:50%;">
 
 <ol start="5">
 <li>随着时间流逝，伊甸园的内存又有不足</li>
 </ol>
-<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/image-20210831222737928.png" alt="image-20210831222737928" style="zoom:50%;">
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211041651646.png" alt="image-20210831222737928" style="zoom:50%;">
 
 <ol start="6">
 <li>将伊甸园以及之前幸存区中的存活对象，采用复制算法，复制到新的幸存区，其中较老对象晋升至老年代</li>
 </ol>
-<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/image-20210831222752787.png" alt="image-20210831222752787" style="zoom:50%;">
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211041651359.png" alt="image-20210831222752787" style="zoom:50%;">
 
 <ol start="7">
 <li>释放伊甸园以及之前幸存区的内存</li>
 </ol>
-<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/image-20210831222803281.png" alt="image-20210831222803281" style="zoom:50%;">
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211041651271.png" alt="image-20210831222803281" style="zoom:50%;">
 
 
 
@@ -508,7 +508,7 @@
 <p>-XX:InitiatingHeapOccupancyPercent&#x3D;percent （默认45%）</p>
 </li>
 </ul>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/image-20221024165619205.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211041651552.png"></p>
 <h4 id="4-混合收集"><a href="#4-混合收集" class="headerlink" title="4) 混合收集"></a>4) 混合收集</h4><p>会对 E、S、O 进行全面垃圾回收</p>
 <ul>
 <li>最终标记（Remark）会 STW</li>
@@ -516,16 +516,16 @@
 </ul>
 <p>-XX:MaxGCPauseMillis&#x3D;ms  &#x2F;&#x2F;最大暂停时间</p>
 <p>1.并发标记之后，会有重新标记阶段解决漏标问题，此时<strong>需要暂停用户线程</strong>。这些都完成后就知道了老年代有哪些存活对象，随后进入混合收集阶段。此时不会对所有老年代区域进行回收，而是根据<strong>暂停时间目标</strong>优先回收价值高（存活对象少）的区域（这也是 Gabage First 名称的由来）。</p>
-<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/image-20210831222828104.png" alt="image-20210831222828104" style="zoom:50%;">
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211041651279.png" alt="image-20210831222828104" style="zoom:50%;">
 
 <p>2.混合收集阶段中，参与复制的有 eden、survivor、old，下图显示了伊甸园和幸存区的存活对象复制</p>
-<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/image-20210831222841096.png" alt="image-20210831222841096" style="zoom:50%;">
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211041651943.png" alt="image-20210831222841096" style="zoom:50%;">
 
 <p>3.下图显示了老年代和幸存区晋升的存活对象的复制</p>
-<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/image-20210831222859760.png" alt="image-20210831222859760" style="zoom:50%;">
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211041651574.png" alt="image-20210831222859760" style="zoom:50%;">
 
 <p>4.复制完成，内存得到释放。进入下一轮的新生代回收、并发标记、混合收集</p>
-<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/image-20210831222919182.png" alt="image-20210831222919182" style="zoom:50%;">
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211041651304.png" alt="image-20210831222919182" style="zoom:50%;">
 
 <h4 id="5-Full-GC"><a href="#5-Full-GC" class="headerlink" title="5) Full GC"></a>5) Full GC</h4><ul>
 <li><p>SerialGC</p>
@@ -575,7 +575,7 @@
 <ul>
 <li>新生代的对象如果被老年代的GC Root引用，会保存一个Remembered Set，标记老年代的GC Root时只需要在Remembered Set对应的脏卡里查找。</li>
 </ul>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/image-20221024173120102.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211041651682.png"></p>
 <ul>
 <li>卡表与 Remembered Set<ul>
 <li>Remembered Set 存在于E中，用于保存新生代对象对应的脏卡<ul>
@@ -587,7 +587,7 @@
 <li>在引用变更时通过 post-write barrier + dirty card queue</li>
 <li>concurrent refinement threads 更新 Remembered Set</li>
 </ul>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/image-20221024173437723.png"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211041651197.png"></p>
 <h4 id="7-重新标记"><a href="#7-重新标记" class="headerlink" title="7) 重新标记"></a>7) 重新标记</h4><p>pre-write barrier + satb_mark_queue</p>
 <p>重新标记阶段</p>
 <p>在垃圾回收时，收集器处理对象的过程中</p>
@@ -599,14 +599,14 @@
 <li><p>白色：还未处理的</p>
 </li>
 </ul>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/20200608151229.png" alt="img"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211041651533.png"></p>
 <p>但是在<strong>并发标记过程中</strong>，有可能A被处理了以后未引用C，但该处理过程还未结束，在处理过程结束之前A引用了C，这时就会用到remark</p>
 <p>过程如下</p>
 <ul>
 <li>之前C未被引用，这时A引用了C，就会给C加一个写屏障，写屏障的指令会被执行，将C放入一个队列当中，并将C变为 处理中 状态</li>
 <li>在<strong>并发标记</strong>阶段结束以后，重新标记阶段会STW，然后将放在该队列中的对象重新处理，发现有强引用引用它，就会处理它</li>
 </ul>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/20200608151239.png" alt="img"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211041651506.png"></p>
 <h4 id="8-JDK-8u20-字符串去重"><a href="#8-JDK-8u20-字符串去重" class="headerlink" title="8) JDK 8u20 字符串去重"></a>8) JDK 8u20 字符串去重</h4><ul>
 <li>优点：节省大量内存</li>
 <li>缺点：略微多占用了 cpu 时间，新生代回收时间略微增加</li>
@@ -630,7 +630,7 @@
 <ul>
 <li>XX:+ClassUnloadingWithConcurrentMark 默认启用</li>
 </ul>
-<h4 id="10-JDK-8u60-回收巨型对象"><a href="#10-JDK-8u60-回收巨型对象" class="headerlink" title="10) JDK 8u60 回收巨型对象"></a>10) JDK 8u60 回收巨型对象</h4><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/JVM-2-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/image-20221024204139143.png"></p>
+<h4 id="10-JDK-8u60-回收巨型对象"><a href="#10-JDK-8u60-回收巨型对象" class="headerlink" title="10) JDK 8u60 回收巨型对象"></a>10) JDK 8u60 回收巨型对象</h4><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211041651699.png"></p>
 <ul>
 <li><p>一个对象大于 region 的一半时，称之为巨型对象</p>
 </li>
