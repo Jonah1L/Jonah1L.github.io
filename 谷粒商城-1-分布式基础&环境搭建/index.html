@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>谷粒商城-1-分布式基础&amp;环境搭建 | Jonah</title><meta name="keywords" content="java,分布式,项目"><meta name="author" content="Jonah"><meta name="copyright" content="Jonah"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="分布式基础&amp;环境搭建">
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>谷粒商城-1-分布式基础&amp;环境搭建 | Jonah</title><meta name="keywords" content="java,分布式,项目"><meta name="author" content="Jonah"><meta name="copyright" content="Jonah"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="分布式基础&amp;环境搭建  一、项目简介1. 项目背景1. 电商模式市面上有 5 种常见的电商模式 B2B、B2C、C2B、C2C、O2O； 1、B2B 模式 B2B (Business to Business)， 是指商家与商家建立的商业关系。 如：阿里巴巴 2、B2C 模式 B2C (Business to Consumer)， 就是我们经常看到的供应商直接把商品卖给用户，即“商对客” 模">
 <meta property="og:type" content="article">
 <meta property="og:title" content="谷粒商城-1-分布式基础&amp;环境搭建">
 <meta property="og:url" content="https://liu-zhijian1.gitee.io/%E8%B0%B7%E7%B2%92%E5%95%86%E5%9F%8E-1-%E5%88%86%E5%B8%83%E5%BC%8F%E5%9F%BA%E7%A1%80&%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/index.html">
 <meta property="og:site_name" content="Jonah">
-<meta property="og:description" content="分布式基础&amp;环境搭建">
+<meta property="og:description" content="分布式基础&amp;环境搭建  一、项目简介1. 项目背景1. 电商模式市面上有 5 种常见的电商模式 B2B、B2C、C2B、C2C、O2O； 1、B2B 模式 B2B (Business to Business)， 是指商家与商家建立的商业关系。 如：阿里巴巴 2、B2C 模式 B2C (Business to Consumer)， 就是我们经常看到的供应商直接把商品卖给用户，即“商对客” 模">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/%E8%B0%B7%E7%B2%92%E5%95%86%E5%9F%8E.jpg">
 <meta property="article:published_time" content="2022-11-19T09:08:26.000Z">
-<meta property="article:modified_time" content="2022-11-19T09:25:44.267Z">
+<meta property="article:modified_time" content="2022-11-20T07:21:09.077Z">
 <meta property="article:author" content="Jonah">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="分布式">
@@ -55,7 +55,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2022-11-19 17:25:44'
+  postUpdate: '2022-11-20 15:21:09'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -144,7 +144,328 @@
       }
     }
     detectApple()
-    })(window)</script><link rel="stylesheet" href="/css/mycss.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/configure_img/122c3d66b23e45407297fbadacf3b3ef%20%283%29.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/谷粒商城.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Jonah</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">谷粒商城-1-分布式基础&amp;环境搭建</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-11-19T09:08:26.000Z" title="发表于 2022-11-19 17:08:26">2022-11-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-11-19T09:25:44.267Z" title="更新于 2022-11-19 17:25:44">2022-11-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%A1%B9%E7%9B%AE/%E8%B0%B7%E7%B2%92%E5%95%86%E5%9F%8E/">谷粒商城</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">10</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>1分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="谷粒商城-1-分布式基础&amp;环境搭建"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="分布式基础-amp-环境搭建"><a href="#分布式基础-amp-环境搭建" class="headerlink" title="分布式基础&amp;环境搭建"></a>分布式基础&amp;环境搭建</h1></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://liu-zhijian1.gitee.io">Jonah</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://liu-zhijian1.gitee.io/%E8%B0%B7%E7%B2%92%E5%95%86%E5%9F%8E-1-%E5%88%86%E5%B8%83%E5%BC%8F%E5%9F%BA%E7%A1%80&amp;%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">https://liu-zhijian1.gitee.io/谷粒商城-1-分布式基础&amp;环境搭建/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">转载请注明来自 <a href="https://liu-zhijian1.gitee.io/" target="_blank">Jonah</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/java/">java</a><a class="post-meta__tags" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a><a class="post-meta__tags" href="/tags/%E9%A1%B9%E7%9B%AE/">项目</a></div><div class="post_share"><div class="social-share" data-image="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/谷粒商城.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/Linux/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/linux.jpg" onerror="onerror=null;src='https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/configure_img/i-illust-nm0913-2-04.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Linux</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/%E9%9D%A2%E8%AF%95%E9%A2%98-2-%E5%B9%B6%E5%8F%91%E7%AF%87/" title="面试题-2.并发篇"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/java.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-20</div><div class="title">面试题-2.并发篇</div></div></a></div><div><a href="/JVM-4-%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" title="JVM-4-内存模型"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/jvm.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-28</div><div class="title">JVM-4-内存模型</div></div></a></div><div><a href="/%E9%9D%A2%E8%AF%95%E9%A2%98-1-%E5%9F%BA%E7%A1%80%E7%AF%87/" title="面试题-1.基础篇"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/java.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-20</div><div class="title">面试题-1.基础篇</div></div></a></div><div><a href="/%E9%9D%A2%E8%AF%95%E9%A2%98-3-%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%AF%87/" title="面试题-3.虚拟机篇"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/java.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-20</div><div class="title">面试题-3.虚拟机篇</div></div></a></div><div><a href="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/" title="JVM-3-类加载与字节码技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/jvm.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-25</div><div class="title">JVM-3-类加载与字节码技术</div></div></a></div><div><a href="/%E9%9D%A2%E8%AF%95%E9%A2%98-4-%E6%A1%86%E6%9E%B6%E7%AF%87/" title="面试题-4.框架篇"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/java.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-20</div><div class="title">面试题-4.框架篇</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/configure_img/122c3d66b23e45407297fbadacf3b3ef%20%283%29.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Jonah</div><div class="author-info__description">QQ: 2534333278</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Jonah1L"><i class="fab fa-github"></i><span>Git Hub</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://jonah-1314485145.cos.ap-nanjing.myqcloud.com/temp_qrcode_share_2534333278.png.png" target="_blank" title="点击加我好友"><i class="fa-brands fa-qq"></i></a><a class="social-icon" href="https://jonah-1314485145.cos.ap-nanjing.myqcloud.com/CB20F9F13126DC3EF6C1D363032470CB.png" target="_blank" title="点击加我好友"><i class="fa-brands fa-weixin"></i></a><a class="social-icon" href="mailto:2534333278@qq.com" target="_blank" title="点击给我发邮件"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">工欲善其事，必先利其器</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E5%9F%BA%E7%A1%80-amp-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-text">分布式基础&amp;环境搭建</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/%E8%B0%B7%E7%B2%92%E5%95%86%E5%9F%8E-1-%E5%88%86%E5%B8%83%E5%BC%8F%E5%9F%BA%E7%A1%80&amp;%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="谷粒商城-1-分布式基础&amp;环境搭建"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/谷粒商城.jpg" onerror="this.onerror=null;this.src='https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/configure_img/i-illust-nm0913-2-04.jpg'" alt="谷粒商城-1-分布式基础&amp;环境搭建"/></a><div class="content"><a class="title" href="/%E8%B0%B7%E7%B2%92%E5%95%86%E5%9F%8E-1-%E5%88%86%E5%B8%83%E5%BC%8F%E5%9F%BA%E7%A1%80&amp;%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="谷粒商城-1-分布式基础&amp;环境搭建">谷粒商城-1-分布式基础&amp;环境搭建</a><time datetime="2022-11-19T09:08:26.000Z" title="发表于 2022-11-19 17:08:26">2022-11-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Linux/" title="Linux"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/linux.jpg" onerror="this.onerror=null;this.src='https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/configure_img/i-illust-nm0913-2-04.jpg'" alt="Linux"/></a><div class="content"><a class="title" href="/Linux/" title="Linux">Linux</a><time datetime="2022-11-18T10:09:58.000Z" title="发表于 2022-11-18 18:09:58">2022-11-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="设计模式"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/设计模式.jpg" onerror="this.onerror=null;this.src='https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/configure_img/i-illust-nm0913-2-04.jpg'" alt="设计模式"/></a><div class="content"><a class="title" href="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="设计模式">设计模式</a><time datetime="2022-11-13T08:33:00.000Z" title="发表于 2022-11-13 16:33:00">2022-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/%E7%AE%97%E6%B3%95/" title="算法"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/leetcode.jpg" onerror="this.onerror=null;this.src='https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/configure_img/i-illust-nm0913-2-04.jpg'" alt="算法"/></a><div class="content"><a class="title" href="/%E7%AE%97%E6%B3%95/" title="算法">算法</a><time datetime="2022-11-07T11:21:31.000Z" title="发表于 2022-11-07 19:21:31">2022-11-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Spring-3-AOP/" title="Spring-3-AOP"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/spring.jpg" onerror="this.onerror=null;this.src='https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/configure_img/i-illust-nm0913-2-04.jpg'" alt="Spring-3-AOP"/></a><div class="content"><a class="title" href="/Spring-3-AOP/" title="Spring-3-AOP">Spring-3-AOP</a><time datetime="2022-11-07T06:00:03.000Z" title="发表于 2022-11-07 14:00:03">2022-11-07</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 By Jonah</div><div class="framework-info"><span></span></div><div class="footer_custom_text">🚀</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+    })(window)</script><link rel="stylesheet" href="/css/mycss.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/configure_img/122c3d66b23e45407297fbadacf3b3ef%20%283%29.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/谷粒商城.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Jonah</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">谷粒商城-1-分布式基础&amp;环境搭建</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-11-19T09:08:26.000Z" title="发表于 2022-11-19 17:08:26">2022-11-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-11-20T07:21:09.077Z" title="更新于 2022-11-20 15:21:09">2022-11-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%A1%B9%E7%9B%AE/%E8%B0%B7%E7%B2%92%E5%95%86%E5%9F%8E/">谷粒商城</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="谷粒商城-1-分布式基础&amp;环境搭建"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="分布式基础-amp-环境搭建"><a href="#分布式基础-amp-环境搭建" class="headerlink" title="分布式基础&amp;环境搭建"></a>分布式基础&amp;环境搭建</h1><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211191738007.jpg"  />
+
+<h1 id="一、项目简介"><a href="#一、项目简介" class="headerlink" title="一、项目简介"></a>一、项目简介</h1><h2 id="1-项目背景"><a href="#1-项目背景" class="headerlink" title="1. 项目背景"></a>1. 项目背景</h2><h3 id="1-电商模式"><a href="#1-电商模式" class="headerlink" title="1. 电商模式"></a>1. 电商模式</h3><p>市面上有 5 种常见的电商模式 B2B、B2C、C2B、C2C、O2O；</p>
+<p><strong>1、B2B 模式</strong></p>
+<p>B2B (Business to Business)， 是指商家与商家建立的商业关系。 如：阿里巴巴</p>
+<p><strong>2、B2C 模式</strong></p>
+<p>B2C (Business to Consumer)， 就是我们经常看到的供应商直接把商品卖给用户，即“商对客” 模式，也就是通常说的商业零售，直接面向消费者销售产品和服务。如：苏宁易购、京东、</p>
+<p>天猫、小米商城</p>
+<p><strong>3、C2B 模式</strong></p>
+<p>C2B (Customer to Business)，即消费者对企业。先有消费者需求产生而后有企业生产，即先有消费者提出需求，后有生产企业按需求组织生产</p>
+<p><strong>4、C2C 模式</strong></p>
+<p>C2C (Customer to Consumer) ，客户之间自己把东西放上网去卖，如：淘宝，闲鱼</p>
+<p><strong>5、O2O 模式</strong></p>
+<p>O2O 即 Online To Offline，也即将线下商务的机会与互联网结合在了一起，让互联网成为线下交易的前台。线上快速支付，线下优质服务。如：饿了么，美团，淘票票，京东到家</p>
+<h3 id="2-谷粒商城"><a href="#2-谷粒商城" class="headerlink" title="2. 谷粒商城"></a>2. 谷粒商城</h3><p>谷粒商城是一个 B2C 模式的电商平台，销售自营商品给客户。</p>
+<h2 id="2-项目架构图"><a href="#2-项目架构图" class="headerlink" title="2. 项目架构图"></a>2. 项目架构图</h2><p>1、项目微服务架构图</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211191740654.jpeg"></p>
+<p>2、微服务划分图</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211191742339.png"></p>
+<h2 id="3-项目技术-amp-特色"><a href="#3-项目技术-amp-特色" class="headerlink" title="3. 项目技术&amp;特色"></a>3. 项目技术&amp;特色</h2><ul>
+<li>前后分离开发，并开发基于vue的后台管理系统</li>
+<li>SpringCloud全新的解决方案</li>
+<li>应用监控、限流、网关、熔断降级等分布式方案，全方位涉及</li>
+<li>透彻讲解分布式事务，分布式锁等分布式系统的难点</li>
+<li>压力测试与性能优化</li>
+<li>各种集群技术的区别以及使用</li>
+<li>CI&#x2F;CD 使用</li>
+</ul>
+<h2 id="4-项目前置要求"><a href="#4-项目前置要求" class="headerlink" title="4. 项目前置要求"></a>4. 项目前置要求</h2><ul>
+<li>熟悉SpringBoot以及常见整合方案</li>
+<li>了解SpringCloud</li>
+<li>熟悉 git  maven</li>
+<li>熟悉 linux redis docker 基本操作</li>
+<li>了解 html，css，js，vue</li>
+<li>熟练使用idea开发项目</li>
+</ul>
+<h1 id="二、分布式基础概念"><a href="#二、分布式基础概念" class="headerlink" title="二、分布式基础概念"></a>二、分布式基础概念</h1><h2 id="1-微服务"><a href="#1-微服务" class="headerlink" title="1. 微服务"></a>1. 微服务</h2><p>微服务架构风格，就像是把一个<strong>单独的应用程序</strong>开发成<strong>一套小服务</strong>，每个<strong>小服务</strong>运行在自己的进程中，并使用轻量级机制通信，通常是 HTTP API 这些服务围绕业务能力来构建，并通过完全自动化部署机制来独立部署，这些服务使用不同的编程语言书写，以及不同数据存储技术，并保持最低限度的集中式管理。<strong>简而言之，拒绝大型单体应用，基于业务边界进行服务微化拆分，每个服务独立部署运行。</strong></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211191806713.png"></p>
+<h2 id="2-集群-amp-分布式-amp-节点"><a href="#2-集群-amp-分布式-amp-节点" class="headerlink" title="2. 集群&amp;分布式&amp;节点"></a>2. 集群&amp;分布式&amp;节点</h2><p>集群是个物理状态，分布式是个工作方式</p>
+<p>只要是一堆机器，也可以叫做集群，他们是不是一起协作干活，这谁也不知道。</p>
+<p>《分布式系统原理与范型》定义：分布式系统是若干独立计算机的集合，这些计算机对于用户来说像单个系统。</p>
+<p>分布式系统 (distributed system) 是建立网络之上的软件系统。</p>
+<ul>
+<li><p>分布式是指根据不同的业务分布在不同的地方。</p>
+</li>
+<li><p>集群指的是将几台服务器集中在一起，实现同一业务。</p>
+</li>
+</ul>
+<p>例如：<strong>京东是一个分布式系统，众多业务运行在不同的机器上，所有业务构成一个大型的分布式业务集群</strong>。每一个小的业务，比如用户系统，访问压力大的时候一台服务器是不够的，我们就应该将用户系统部署到多个服务器，也就是每一个业务系统也可以做集群化</p>
+<p><strong>分布式中的每一个节点，都可以做集群，而集群并不一定就是分布式的</strong></p>
+<p>节点：集群中的一个服务器</p>
+<h2 id="3-远程调用"><a href="#3-远程调用" class="headerlink" title="3. 远程调用"></a>3. 远程调用</h2><p>在分布式系统中，各个服务可能处于不同主机，但是服务之间不可避免的需要互相调用，我们称之为远程调用</p>
+<p>SpringCloud中使用HTTP+JSON的方式来完成远程调用</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211191858125.png"></p>
+<h2 id="4-负载均衡"><a href="#4-负载均衡" class="headerlink" title="4. 负载均衡"></a>4. 负载均衡</h2><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211191900817.png"></p>
+<p>分布式系统中，A 服务需要调用B服务，B服务在多台机器中都存在， A调用任意一个服务器均可完成功能</p>
+<p>为了使每一个服务器都不要太或者太闲，我们可以负载均衡调用每一个服务器，提升网站的健壮性</p>
+<p>常见的负载均衡算法：</p>
+<ul>
+<li><p><strong>轮询</strong>：为第一个请求选择健康池中的每一个后端服务器，然后按顺序往后依次选择，直到最后一个，然后循环</p>
+</li>
+<li><p><strong>最小连接</strong>：优先选择链接数最少，也就是压力最小的后端服务器，在会话较长的情况下可以考虑采取这种方式</p>
+</li>
+</ul>
+<h2 id="5-服务注册-x2F-发现-amp-注册中心"><a href="#5-服务注册-x2F-发现-amp-注册中心" class="headerlink" title="5. 服务注册&#x2F;发现&amp;注册中心"></a>5. 服务注册&#x2F;发现&amp;注册中心</h2><p>A服务调用B服务，A服务不知道B服务当前在哪几台服务器上有，哪些正常的，哪些服务已经下线，解决这个问题可以引入注册中心</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211201005299.png"></p>
+<p>如果某些服务下线，我们其他人可以实时的感知到其他服务的状态，从而避免调用不可用的服务</p>
+<h2 id="6-配置中心"><a href="#6-配置中心" class="headerlink" title="6. 配置中心"></a>6. 配置中心</h2><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211201007470.png"></p>
+<p>每一个服务最终都有大量配置，并且每个服务都可能部署在多个服务器上，我们经常需要变更配置，我们可以让每个服务在配置中心获取自己的配置。</p>
+<p>配置中心用来集中管理微服务的配置信息</p>
+<h2 id="7-服务熔断-amp-服务降级"><a href="#7-服务熔断-amp-服务降级" class="headerlink" title="7. 服务熔断&amp;服务降级"></a>7. 服务熔断&amp;服务降级</h2><p>在微服务架构中，微服务之间通过网络来进行通信，存在相互依赖，当其中一个服务不可用时，有可能会造成雪崩效应，要防止这种情况，必须要有容错机制来保护服务</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211201008674.png"></p>
+<p><strong>服务熔断</strong></p>
+<ul>
+<li>设置服务的超时，当被调用的服务经常失败到达某个阈值，我们可以开启断路保护机制，后来的请求不再去调用这个服务，本地直接返回默认的数据</li>
+</ul>
+<p><strong>服务降级</strong></p>
+<ul>
+<li>在运维期间，当系统处于高峰期，系统资源紧张，我们可以让非核心业务降级运行，降级：某些服务不处理，或者简单处理【抛异常，返回NULL，调用  Mock数据，调用 FallBack 处理逻辑】</li>
+</ul>
+<h2 id="8-API-网关"><a href="#8-API-网关" class="headerlink" title="8. API 网关"></a>8. API 网关</h2><p>在微服务架构中，API Gateway 作为整体架构的重要组件，抽象服务中需要的公共功能，同时它提供了客户端负载均衡，服务自动熔断，灰度发布，统一认证，限流监控，日志统计等丰富功能，帮助我们解决很多API管理的难题</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211201011405.png"></p>
+<h1 id="三、环境搭建"><a href="#三、环境搭建" class="headerlink" title="三、环境搭建"></a>三、环境搭建</h1><h2 id="1-准备linux服务器"><a href="#1-准备linux服务器" class="headerlink" title="1. 准备linux服务器"></a>1. 准备linux服务器</h2><p>使用虚拟机或者云服务器都可以，因为电脑内存不够用，目前使用的是阿里云轻量级服务器。</p>
+<h2 id="2-安装docker（CentOS）"><a href="#2-安装docker（CentOS）" class="headerlink" title="2. 安装docker（CentOS）"></a>2. 安装docker（CentOS）</h2><ol>
+<li>卸载系统之前的docker</li>
+</ol>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> yum remove <span class="token function">docker</span> <span class="token punctuation">\</span>
+                  docker-client <span class="token punctuation">\</span>
+                  docker-client-latest <span class="token punctuation">\</span>
+                  docker-common <span class="token punctuation">\</span>
+                  docker-latest <span class="token punctuation">\</span>
+                  docker-latest-logrotate <span class="token punctuation">\</span>
+                  docker-logrotate <span class="token punctuation">\</span>
+                  docker-engine</code></pre>
+
+
+
+<ol start="2">
+<li>设置存储库</li>
+</ol>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> yum <span class="token function">install</span> <span class="token parameter variable">-y</span> yum-utils
+<span class="token function">sudo</span> yum-config-manager <span class="token punctuation">\</span>
+    --add-repo <span class="token punctuation">\</span>
+    https://download.docker.com/linux/centos/docker-ce.repo</code></pre>
+
+
+
+<ol start="3">
+<li>安装docker引擎</li>
+</ol>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> yum <span class="token function">install</span> docker-ce docker-ce-cli containerd.io</code></pre>
+
+
+
+<ol start="4">
+<li>启动Docker.</li>
+</ol>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> systemctl start <span class="token function">docker</span> </code></pre>
+
+
+
+<ol start="5">
+<li>设置开机自启</li>
+</ol>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> systemctl <span class="token builtin class-name">enable</span> <span class="token function">docker</span></code></pre>
+
+
+
+<ol start="6">
+<li>配置docker镜像加速</li>
+</ol>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /etc/docker
+<span class="token function">sudo</span> <span class="token function">tee</span> /etc/docker/daemon.json <span class="token operator">&lt;&lt;-</span><span class="token string">'EOF'
+&#123;
+  "registry-mirrors": ["https://59ckzn32.mirror.aliyuncs.com"]
+&#125;
+EOF</span>
+<span class="token function">sudo</span> systemctl daemon-reload
+<span class="token function">sudo</span> systemctl restart <span class="token function">docker</span></code></pre>
+
+
+
+<h2 id="3-docker安装mysql"><a href="#3-docker安装mysql" class="headerlink" title="3. docker安装mysql"></a>3. docker安装mysql</h2><ol>
+<li>下载mysql镜像</li>
+</ol>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">docker</span> pull mysql:5.7</code></pre>
+
+
+
+<ol start="2">
+<li>创建实例并启动</li>
+</ol>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">-p</span> <span class="token number">3306</span>:3306 <span class="token parameter variable">--name</span> mysql <span class="token punctuation">\</span>
+<span class="token parameter variable">-v</span> /mydata/mysql/log:/var/log/mysql <span class="token punctuation">\</span>
+<span class="token parameter variable">-v</span> /mydata/mysql/data:/var/lib/mysql <span class="token punctuation">\</span>
+<span class="token parameter variable">-v</span> /mydata/mysql/conf:/etc/mysql <span class="token punctuation">\</span>
+<span class="token parameter variable">-e</span> <span class="token assign-left variable">MYSQL_ROOT_PASSWORD</span><span class="token operator">=</span>root <span class="token punctuation">\</span>
+<span class="token parameter variable">-d</span> mysql:5.7</code></pre>
+
+<p>参数说明</p>
+<ul>
+<li>-p 3306:3306：将容器的 3306 端口映射到主机的 3306 端口</li>
+<li>-v &#x2F;mydata&#x2F;mysql&#x2F;conf:&#x2F;etc&#x2F;mysql：将配置文件夹挂载到主机</li>
+<li>-v &#x2F;mydata&#x2F;mysql&#x2F;log:&#x2F;var&#x2F;log&#x2F;mysql：将日志文件夹挂载到主机</li>
+<li>-v &#x2F;mydata&#x2F;mysql&#x2F;data:&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;：将配置文件夹挂载到主机</li>
+<li>-e MYSQL_ROOT_PASSWORD&#x3D;root：初始化 root 用户的密码</li>
+</ul>
+<ol start="3">
+<li>mysql 配置</li>
+</ol>
+<ul>
+<li>修改以下路径文件</li>
+</ul>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">vi</span> /mydata/mysql/conf/my.cnf
+</code></pre>
+
+<ul>
+<li>将下面内容复制到文件中</li>
+</ul>
+<pre class="language-none"><code class="language-none">[client]
+default-character-set&#x3D;utf8
+
+[mysql]
+default-character-set&#x3D;utf8
+
+[mysqld]
+init_connect&#x3D;&#39;SET collation_connection&#x3D;utf8_unicode_ci&#39; 
+init_connect&#x3D;&#39;SET NAMES utf8&#39; 
+character-set-server&#x3D;utf8
+collation-server&#x3D;utf8_unicode_ci
+skip-character-set-client-handshake
+skip-name-resolve</code></pre>
+
+<ul>
+<li>重启mysql容器</li>
+</ul>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> restart mysql</code></pre>
+
+
+
+<h2 id="4-docker安装redis"><a href="#4-docker安装redis" class="headerlink" title="4. docker安装redis"></a>4. docker安装redis</h2><ol>
+<li>下载镜像文件</li>
+</ol>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> pull redis</code></pre>
+
+
+
+<ol start="2">
+<li>创建实例并启动</li>
+</ol>
+<ul>
+<li>在虚拟机中创建容器挂载目录</li>
+</ul>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /mydata/redis/conf
+<span class="token function">touch</span> /mydata/redis/conf/redis.conf</code></pre>
+
+<ul>
+<li>创建容器并启动</li>
+</ul>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">-p</span> <span class="token number">6379</span>:6379 <span class="token parameter variable">--name</span> redis <span class="token parameter variable">-v</span> /mydata/redis/data:/data <span class="token punctuation">\</span>
+<span class="token parameter variable">-v</span> /mydata/redis/conf/redis.conf:/etc/redis/redis.conf <span class="token punctuation">\</span>
+<span class="token parameter variable">-d</span> redis redis-server /etc/redis/redis.conf</code></pre>
+
+
+
+<ol start="3">
+<li>修改reids配置文件</li>
+</ol>
+<ul>
+<li>进入linux中挂载的redis配置文件</li>
+</ul>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">vi</span> /mydata/redis/conf/redis.conf</code></pre>
+
+<ul>
+<li>插入以下内容，让 reids 启用 aof 持久化方案</li>
+</ul>
+<pre class="language-none"><code class="language-none">appendonly yes</code></pre>
+
+
+
+<ol start="4">
+<li>重启 redis</li>
+</ol>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> restart redis</code></pre>
+
+
+
+<h2 id="5-统一开发环境"><a href="#5-统一开发环境" class="headerlink" title="5. 统一开发环境"></a>5. 统一开发环境</h2><h3 id="1-Maven"><a href="#1-Maven" class="headerlink" title="1. Maven"></a>1. Maven</h3><ul>
+<li>配置阿里云镜像</li>
+</ul>
+<pre class="language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mirrors</span><span class="token punctuation">></span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mirror</span><span class="token punctuation">></span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span><span class="token punctuation">></span></span>nexus-aliyun<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>id</span><span class="token punctuation">></span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>mirrorOf</span><span class="token punctuation">></span></span>central<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mirrorOf</span><span class="token punctuation">></span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span><span class="token punctuation">></span></span>Nexus aliyun<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>name</span><span class="token punctuation">></span></span>
+		<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url</span><span class="token punctuation">></span></span>http://maven.aliyun.com/nexus/content/groups/public<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url</span><span class="token punctuation">></span></span>
+	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mirror</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>mirrors</span><span class="token punctuation">></span></span></code></pre>
+
+<ul>
+<li>配置 jdk1.8 编译项目</li>
+</ul>
+<pre class="language-none"><code class="language-none">&lt;profiles&gt;
+	&lt;profile&gt;
+		&lt;id&gt;jdk-1.8&lt;&#x2F;id&gt;
+		&lt;activation&gt;
+			&lt;activeByDefault&gt;true&lt;&#x2F;activeByDefault&gt;
+			&lt;jdk&gt;1.8&lt;&#x2F;jdk&gt;
+		&lt;&#x2F;activation&gt;
+		&lt;properties&gt;
+			&lt;maven.compiler.source&gt;1.8&lt;&#x2F;maven.compiler.source&gt;
+			&lt;maven.compiler.target&gt;1.8&lt;&#x2F;maven.compiler.target&gt;
+			&lt;maven.compiler.compilerVersion&gt;1.8&lt;&#x2F;maven.compiler.compilerVersion&gt;
+		&lt;&#x2F;properties&gt;
+	&lt;&#x2F;profile&gt;
+&lt;&#x2F;profiles&gt;</code></pre>
+
+
+
+<h3 id="2-Idea-amp-VsCode安装插件"><a href="#2-Idea-amp-VsCode安装插件" class="headerlink" title="2. Idea &amp; VsCode安装插件"></a>2. Idea &amp; VsCode安装插件</h3><p><strong>Idea</strong> </p>
+<ul>
+<li>lombok</li>
+<li>mybatisx</li>
+</ul>
+<p><strong>Vscode</strong> </p>
+<ul>
+<li>Vetur —— 语法高亮、智能感知、Emmet 等</li>
+<li>包含格式化功能， Alt+Shift+F （格式化全文），Ctrl+K Ctrl+F（格式化选中代码，两个 Ctrl</li>
+<li>需要同时按着）</li>
+<li>EsLint —— 语法纠错</li>
+<li>Auto Close Tag —— 自动闭合 HTML&#x2F;XML 标签</li>
+<li>Auto Rename Tag —— 自动完成另一侧标签的同步修改</li>
+<li>JavaScript(ES6) code snippets — — ES6 语 法 智 能 提 示 以 及 快 速 输 入 ， 除 js 外 还 支</li>
+<li>持.ts，.jsx，.tsx，.html，.vue，省去了配置其支持各种包含 js 代码文件的时间</li>
+<li>HTML CSS Support —— 让 html 标签上写 class 智能提示当前项目所支持的样式</li>
+<li>HTML Snippets —— html 快速自动补全</li>
+<li>Open in browser —— 浏览器快速打开</li>
+<li>Live Server —— 以内嵌服务器方式打开</li>
+<li>Chinese (Simplified) Language Pack for Visual Studio Code —— 中文语言包</li>
+</ul>
+<h3 id="3-安装配置-git"><a href="#3-安装配置-git" class="headerlink" title="3. 安装配置 git"></a>3. 安装配置 git</h3><p>1、下载 git；<a target="_blank" rel="noopener" href="https://git-scm.com/">https://git-scm.com</a><br>2、配置 git，进入 git bash</p>
+<p>配置用户名</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> user.name <span class="token string">"username"</span> //（名字）</code></pre>
+
+<p>配置邮箱</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> user.email <span class="token string">"username@email.com"</span> //<span class="token punctuation">(</span>注册账号时用的邮箱<span class="token punctuation">)</span></code></pre>
+
+<p>3、配置 ssh 免密登录</p>
+<p><a target="_blank" rel="noopener" href="https://gitee.com/help/articles/4181#article-header0">https://gitee.com/help/articles/4181#article-header0</a></p>
+<p>进入 git bash；使用：ssh-keygen -t rsa -C “<a href="mailto:&#120;&#x78;&#120;&#120;&#120;&#64;&#120;&#120;&#x78;&#120;&#120;&#x2e;&#99;&#111;&#x6d;">&#120;&#x78;&#120;&#120;&#120;&#64;&#120;&#120;&#x78;&#120;&#120;&#x2e;&#99;&#111;&#x6d;</a>“命令。 连续三次回车。</p>
+<p>一般用户目录下会有</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/md_img/202211201234954.png"></p>
+<p>或者 cat ~&#x2F;.ssh&#x2F;id_rsa.pub 登录进入 gitee，在设置里面找到 SSH KEY 将.pub 文件的内容粘贴进去使用 ssh -T <a href="mailto:&#103;&#x69;&#116;&#x40;&#103;&#105;&#x74;&#101;&#x65;&#x2e;&#x63;&#x6f;&#x6d;">&#103;&#x69;&#116;&#x40;&#103;&#105;&#x74;&#101;&#x65;&#x2e;&#x63;&#x6f;&#x6d;</a> 测试是否成功即可</p>
+<p>Git+码云教程 <a target="_blank" rel="noopener" href="https://gitee.com/help/articles/4104">https://gitee.com/help/articles/4104</a></p>
+<h3 id="4-创建项目微服务"><a href="#4-创建项目微服务" class="headerlink" title="4. 创建项目微服务"></a>4. 创建项目微服务</h3><p>商品服务、仓储服务、订单服务、优惠券服务、用户服务</p>
+<p>共同点：</p>
+<ul>
+<li>web、openfeign</li>
+<li>每一个服务，包名 <strong>com.atguigu.gulimall</strong>.xxx(product&#x2F;order&#x2F;ware&#x2F;coupon&#x2F;member)</li>
+<li>模块名：gulimall-coupon</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://liu-zhijian1.gitee.io">Jonah</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://liu-zhijian1.gitee.io/%E8%B0%B7%E7%B2%92%E5%95%86%E5%9F%8E-1-%E5%88%86%E5%B8%83%E5%BC%8F%E5%9F%BA%E7%A1%80&amp;%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">https://liu-zhijian1.gitee.io/谷粒商城-1-分布式基础&amp;环境搭建/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">转载请注明来自 <a href="https://liu-zhijian1.gitee.io/" target="_blank">Jonah</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/java/">java</a><a class="post-meta__tags" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a><a class="post-meta__tags" href="/tags/%E9%A1%B9%E7%9B%AE/">项目</a></div><div class="post_share"><div class="social-share" data-image="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/谷粒商城.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/Linux%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/linux.jpg" onerror="onerror=null;src='https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/configure_img/i-illust-nm0913-2-04.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Linux常用操作</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/%E9%9D%A2%E8%AF%95%E9%A2%98-2-%E5%B9%B6%E5%8F%91%E7%AF%87/" title="面试题-2.并发篇"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/java.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-20</div><div class="title">面试题-2.并发篇</div></div></a></div><div><a href="/JVM-4-%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" title="JVM-4-内存模型"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/jvm.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-28</div><div class="title">JVM-4-内存模型</div></div></a></div><div><a href="/%E9%9D%A2%E8%AF%95%E9%A2%98-1-%E5%9F%BA%E7%A1%80%E7%AF%87/" title="面试题-1.基础篇"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/java.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-20</div><div class="title">面试题-1.基础篇</div></div></a></div><div><a href="/%E9%9D%A2%E8%AF%95%E9%A2%98-3-%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%AF%87/" title="面试题-3.虚拟机篇"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/java.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-20</div><div class="title">面试题-3.虚拟机篇</div></div></a></div><div><a href="/JVM-3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%AD%97%E8%8A%82%E7%A0%81%E6%8A%80%E6%9C%AF/" title="JVM-3-类加载与字节码技术"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/jvm.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-25</div><div class="title">JVM-3-类加载与字节码技术</div></div></a></div><div><a href="/%E9%9D%A2%E8%AF%95%E9%A2%98-4-%E6%A1%86%E6%9E%B6%E7%AF%87/" title="面试题-4.框架篇"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/java.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-20</div><div class="title">面试题-4.框架篇</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/configure_img/122c3d66b23e45407297fbadacf3b3ef%20%283%29.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Jonah</div><div class="author-info__description">QQ: 2534333278</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">12</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Jonah1L"><i class="fab fa-github"></i><span>Git Hub</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://jonah-1314485145.cos.ap-nanjing.myqcloud.com/temp_qrcode_share_2534333278.png.png" target="_blank" title="点击加我好友"><i class="fa-brands fa-qq"></i></a><a class="social-icon" href="https://jonah-1314485145.cos.ap-nanjing.myqcloud.com/CB20F9F13126DC3EF6C1D363032470CB.png" target="_blank" title="点击加我好友"><i class="fa-brands fa-weixin"></i></a><a class="social-icon" href="mailto:2534333278@qq.com" target="_blank" title="点击给我发邮件"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">工欲善其事，必先利其器</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E5%9F%BA%E7%A1%80-amp-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-text">分布式基础&amp;环境搭建</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B"><span class="toc-text">一、项目简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E9%A1%B9%E7%9B%AE%E8%83%8C%E6%99%AF"><span class="toc-text">1. 项目背景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%94%B5%E5%95%86%E6%A8%A1%E5%BC%8F"><span class="toc-text">1. 电商模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%B0%B7%E7%B2%92%E5%95%86%E5%9F%8E"><span class="toc-text">2. 谷粒商城</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84%E5%9B%BE"><span class="toc-text">2. 项目架构图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E9%A1%B9%E7%9B%AE%E6%8A%80%E6%9C%AF-amp-%E7%89%B9%E8%89%B2"><span class="toc-text">3. 项目技术&amp;特色</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E9%A1%B9%E7%9B%AE%E5%89%8D%E7%BD%AE%E8%A6%81%E6%B1%82"><span class="toc-text">4. 项目前置要求</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%88%86%E5%B8%83%E5%BC%8F%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="toc-text">二、分布式基础概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="toc-text">1. 微服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E9%9B%86%E7%BE%A4-amp-%E5%88%86%E5%B8%83%E5%BC%8F-amp-%E8%8A%82%E7%82%B9"><span class="toc-text">2. 集群&amp;分布式&amp;节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8"><span class="toc-text">3. 远程调用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1"><span class="toc-text">4. 负载均衡</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C-x2F-%E5%8F%91%E7%8E%B0-amp-%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83"><span class="toc-text">5. 服务注册&#x2F;发现&amp;注册中心</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83"><span class="toc-text">6. 配置中心</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E6%9C%8D%E5%8A%A1%E7%86%94%E6%96%AD-amp-%E6%9C%8D%E5%8A%A1%E9%99%8D%E7%BA%A7"><span class="toc-text">7. 服务熔断&amp;服务降级</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-API-%E7%BD%91%E5%85%B3"><span class="toc-text">8. API 网关</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-text">三、环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%87%86%E5%A4%87linux%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-text">1. 准备linux服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%AE%89%E8%A3%85docker%EF%BC%88CentOS%EF%BC%89"><span class="toc-text">2. 安装docker（CentOS）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-docker%E5%AE%89%E8%A3%85mysql"><span class="toc-text">3. docker安装mysql</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-docker%E5%AE%89%E8%A3%85redis"><span class="toc-text">4. docker安装redis</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E7%BB%9F%E4%B8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="toc-text">5. 统一开发环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Maven"><span class="toc-text">1. Maven</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Idea-amp-VsCode%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6"><span class="toc-text">2. Idea &amp; VsCode安装插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE-git"><span class="toc-text">3. 安装配置 git</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="toc-text">4. 创建项目微服务</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/%E8%B0%B7%E7%B2%92%E5%95%86%E5%9F%8E-1-%E5%88%86%E5%B8%83%E5%BC%8F%E5%9F%BA%E7%A1%80&amp;%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="谷粒商城-1-分布式基础&amp;环境搭建"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/谷粒商城.jpg" onerror="this.onerror=null;this.src='https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/configure_img/i-illust-nm0913-2-04.jpg'" alt="谷粒商城-1-分布式基础&amp;环境搭建"/></a><div class="content"><a class="title" href="/%E8%B0%B7%E7%B2%92%E5%95%86%E5%9F%8E-1-%E5%88%86%E5%B8%83%E5%BC%8F%E5%9F%BA%E7%A1%80&amp;%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="谷粒商城-1-分布式基础&amp;环境搭建">谷粒商城-1-分布式基础&amp;环境搭建</a><time datetime="2022-11-19T09:08:26.000Z" title="发表于 2022-11-19 17:08:26">2022-11-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Linux%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/" title="Linux常用操作"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/linux.jpg" onerror="this.onerror=null;this.src='https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/configure_img/i-illust-nm0913-2-04.jpg'" alt="Linux常用操作"/></a><div class="content"><a class="title" href="/Linux%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/" title="Linux常用操作">Linux常用操作</a><time datetime="2022-11-18T10:09:58.000Z" title="发表于 2022-11-18 18:09:58">2022-11-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="设计模式"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/设计模式.jpg" onerror="this.onerror=null;this.src='https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/configure_img/i-illust-nm0913-2-04.jpg'" alt="设计模式"/></a><div class="content"><a class="title" href="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="设计模式">设计模式</a><time datetime="2022-11-13T08:33:00.000Z" title="发表于 2022-11-13 16:33:00">2022-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/%E7%AE%97%E6%B3%95/" title="算法"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/leetcode.jpg" onerror="this.onerror=null;this.src='https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/configure_img/i-illust-nm0913-2-04.jpg'" alt="算法"/></a><div class="content"><a class="title" href="/%E7%AE%97%E6%B3%95/" title="算法">算法</a><time datetime="2022-11-07T11:21:31.000Z" title="发表于 2022-11-07 19:21:31">2022-11-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Spring-3-AOP/" title="Spring-3-AOP"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/article_img/spring.jpg" onerror="this.onerror=null;this.src='https://blog-img-1314485145.cos.ap-nanjing.myqcloud.com/blog_img/configure_img/i-illust-nm0913-2-04.jpg'" alt="Spring-3-AOP"/></a><div class="content"><a class="title" href="/Spring-3-AOP/" title="Spring-3-AOP">Spring-3-AOP</a><time datetime="2022-11-07T06:00:03.000Z" title="发表于 2022-11-07 14:00:03">2022-11-07</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 By Jonah</div><div class="framework-info"><span></span></div><div class="footer_custom_text">🚀</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
   function initValine () {
     const valine = new Valine(Object.assign({
       el: '#vcomment',
